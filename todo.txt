@@ -1,0 +1,2 @@
+Add an array to each book object that holds reviews for that book
+Users can add a review (probs refer to xkcd lab)
