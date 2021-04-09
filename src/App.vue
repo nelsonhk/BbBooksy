@@ -17,6 +17,11 @@
               <router-link to="/Review">
                 <p>Review a Book</p>
               </router-link>
+            </div> <!--header-item--> 
+            <div class="header-item">
+              <router-link to="/Admin">
+                <p>Admin</p>
+              </router-link>
             </div> <!--header-item-->
           </div> <!--header-items-->
         </div> <!--header-->
@@ -66,8 +71,10 @@ body {
   height: 100%;
   min-height: 100vh; 
   display: block;
-  padding-bottom: 100px; 
+  padding-bottom: 150px; /*height of footer*/
   width: 100%;
+  background-color: #eb7f4d;
+
 }
 #app {
   height: 100%;

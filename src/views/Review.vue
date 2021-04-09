@@ -43,45 +43,13 @@
                     </div>
                 </div><!--add-->
             </div><!--inputField-->
-            <div class="inputField">
-                <div class="heading">
-                    <h2>Edit/Delete a Book:</h2>
-                </div> <!--heading-->
-                <div class="edit">
-                    <div class="form">
-                        <p>Choose Your Book:</p>
-                        <multiselect label="name" v-model="findItem" :options="allBooks"></multiselect>
-                        <p>You selected:{{findItem}}</p> -->
-                    </div>
-                    <div class="editing">
-                        <div class="upload" v-if="findItem">
-                            <p>Change Book Details:</p>
-                            <input v-model="findItem.genre">
-                            <input v-model="findItem.review">
-                            <p></p>
-                        </div><!--upload-->
-                        <div class="actions" v-if="findItem">
-                            <button class="action" @click="editItem(findItem)">Edit</button>
-                            <div class="upload" v-if="addItem">
-                                <h2>Successfully submitted!</h2>
-                            </div>
-                            <button class="action" @click="deleteItem(findItem)">Delete</button>
-                        </div><!--actions-->
-                    </div> <!--editing-->
-                </div><!--edit-->
-            </div> <!--input field-->
         </div> <!--input field-container -->  
     </div><!--s-review-->
 </template>
 
 <script>
 // import Books from "../components/Books.vue";
-import Multiselect from 'vue-multiselect';
 export default {
-    components: {
-        // Books,
-        Multiselect,
-    },
     name: 'Review',
     data() {
         return {
@@ -126,24 +94,9 @@ export default {
         getBooks() {
             this.allBooks = this.$root.$data.books;
         },
-        async deleteItem(item) {
-            if(this.$root.$data.books.length === 0) {
-                return;
-            }
-            let index = this.$root.$data.books.indexOf(item);
-            this.$root.$data.books.splice(index,1);
-            this.findItem = null;
-        },  
-        editItem(item) {
-            let index = this.$root.$data.books.indexOf(item);
-            this.$root.$data.books[index].genre = item.genre;
-            this.$root.$data.books[index].review = item.review;
-            this.findItem = null;
-        },
     }
 }
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 
 <style scoped>
@@ -154,7 +107,7 @@ export default {
 }
 .inputField-container {
     height: 100%;
-
+    margin-bottom: 20px;
 }
 p {
     line-height: 1.5em;
@@ -194,7 +147,7 @@ input {
     padding: 2px 5px;
 }
 .form {
-    /* margin-right: 50px; */
+    margin-right: 50px;
     width: 100%;
 }
 .actions {
