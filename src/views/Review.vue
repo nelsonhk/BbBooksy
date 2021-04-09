@@ -8,20 +8,34 @@
                 </div><!--heading-->
                 <div class="add">
                     <div class="form">
+                      <div class="question">
                         <p>What is your book called?</p>
                         <input v-model="title" placeholder="title">
+                      </div>
+                      <div class="question">
                         <p>Who's the author?</p>
                         <input v-model="author" placeholder="author">
+                      </div>
+                      <div class="question">
                         <p>Write your description!</p>
                         <input v-model="description" placeholder="description">
+                      </div>
+                      <div class="question">
                         <p>What's the genre?</p>
                         <input v-model="genre" placeholder="genre">
+                      </div>
+                      <div class="question">
                         <p>Rate the book (0-5):</p>
                         <input v-model="rating" placeholder="rating">
+                      </div>
+                      <div class="question">
                         <p>Write a review!</p>
                         <input v-model="review" placeholder="review">
+                      </div>
+                      <div class="question">
                         <p>Give us a URL for the book cover:</p>
                         <input v-model="photoURL" placeholder="photoURL">
+                      </div>
                         <button @click="upload()">Submit Book</button>
                     </div><!--form-->
                     <div class="upload" v-if="addItem">
@@ -142,6 +156,10 @@ export default {
     height: 100%;
 
 }
+p {
+    line-height: 1.5em;
+
+}
 .inputField {
     border: 2px solid #eb7f4d;
     background-color: antiquewhite;
@@ -159,7 +177,9 @@ export default {
     margin-top: 0px;
     margin-left: 0px;
 }
-
+.question {
+  margin: 15px;
+}
 /* Form */
 input,
 textarea,
@@ -167,14 +187,19 @@ select,
 button {
   font-family: 'Montserrat', sans-serif;
   font-size: 1em;
+  line-height: 1.5em;
 }
-
+input {
+    width: 100%;
+    padding: 2px 5px;
+}
 .form {
-    margin-right: 50px;
+    /* margin-right: 50px; */
+    width: 100%;
 }
 .actions {
     padding: 3px;
-    margin: 0px;
+    margin: 5px;
 }
 .action {
     margin: 15px;
@@ -190,6 +215,9 @@ button {
     .edit {
         display: flex;
     } */
+    .form {
+      width: 75%;
+    }
 }
 
 /* Desktop Screen */
@@ -197,6 +225,9 @@ button {
 /*    .inputField-container {
         display: flex;
     } */
+    .form {
+      width: 50%;
+    }
     .add,
     .edit {
         display: flex;
