@@ -9,52 +9,24 @@
         page to add one of your own! </h4> 
     </div>
     </div>
-    <section class="image-gallery">
-      <div class="image" v-for="book in books" :key="book.id">
-        <div class="title">
-          <h2>Title: {{book.name}}</h2>
-        </div>
-        <div class="description">
-          <h3>Description: {{book.description}}</h3>
-        </div>
-        <div class="bookCover">
-          <img :src="book.photoPath" />
-        </div>
-        <!-- <h2>{{book.genre}}</h2> -->
-        <!-- <h2>{{book.genre.name}}</h2> -->
-      </div>
-    </section>
+    <Books :books="books" />   
   </div> <!--home-->
 </template>
 
 <script>
-// @ is an alias to /src
-import axios from 'axios';
+import Books from "../components/Books.vue"
 export default {
   name: 'Home',
-  data() {
-    return {
-     books: [],
+  components: {
+    Books
+  },
+  computed: {
+    books () {
+      return this.$root.$data.books;
     }
-  },
-  created() {
-    this.getBooks();
-  },
-  methods: {
-    async getBooks() {
-      try {
-        let response = await axios.get("/api/books");
-        this.books = response.data;
-        return true;
-      } catch (error) {
-        console.log(error);
-      }
-    },
   }
 }
 </script>
-
-
 
 <style scoped>
 * {
@@ -66,7 +38,6 @@ export default {
 body {
   height: 100%;
   width: 100%;
-  /* border: 4px dashed red; */
 }
 
 .main-container {
@@ -102,8 +73,6 @@ body {
   background-color: antiquewhite;
   padding: 1%;
   margin-bottom: 4%;
-  /* margin-left: 20%;
-  margin-right: 20%; */
   border: 4px solid #a13b0c;
 }
 

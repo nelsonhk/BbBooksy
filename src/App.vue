@@ -5,7 +5,7 @@
       <div id="menu">
         <div class="header">
             <router-link class="header-logo" to="/">
-              <img class="image" src="./assets/Books.png">
+              <img class="image" src="./assets/Booksy.png">
             </router-link>
           <div class="header-items"> 
             <div class="header-item">
@@ -14,7 +14,7 @@
               </router-link>
             </div> <!--header-item-->
             <div class="header-item">
-              <router-link to="/SubmitReview">
+              <router-link to="/Review">
                 <p>Review a Book</p>
               </router-link>
             </div> <!--header-item-->
@@ -77,9 +77,6 @@ body {
 {
   height: 100%;
 }
-
-
-
 
 .router-link-exact-active, .header-item a {
   text-decoration: none;

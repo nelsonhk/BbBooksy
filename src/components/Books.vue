@@ -1,17 +1,19 @@
 <template>
 <div class="wrapper">
-  <div class="products">
-    <div class="product" v-for="product in products" :key="product.id">
+  <div class="books">
+    <div class="book" v-for="book in books" :key="book.id">
       <div class="info">
-        <h1>{{product.name}}</h1>
-        <p>{{product.country}}</p>
+        <h1>{{book.title}}</h1>
+        <p>By: {{book.person}}</p>
+      </div>
+      <div class="genre">
+        <p>{{book.genre}}</p>
       </div>
       <div class="image">
-        <img :src="'/images/products/'+product.image">
+        <img :src="book.cover"/>
       </div>
-      <div class="price">
-        <h2>{{product.price}}</h2>
-        <button class="auto" @click="addToCart(product)">Add to Cart</button>
+      <div class="reviews">
+        <h2>{{book.rating}}</h2>
       </div>
     </div>
   </div>
@@ -20,15 +22,10 @@
 
 <script>
 export default {
-  name: 'ProductList',
+  name: 'Books',
   props: {
-    products: Array
+    books: Array
   },
-  methods: {
-      addToCart(product) {
-        this.$root.$data.cart.push(product)
-      }
-  }
 }
 </script>
 

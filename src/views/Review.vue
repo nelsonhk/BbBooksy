@@ -8,40 +8,44 @@
                 </div><!--heading-->
                 <div class="add">
                     <div class="form">
-                        <p>Choose a book:</p>
-                        <multiselect label="name" v-model="book" :options="books"></multiselect>
-                        <p>Who's writing the review?</p>
-                        <multiselect track-by="id" label="name" v-model="person" :options="users"></multiselect>
-                        <p>{{person}}</p>
-                        <p>Write your review!</p>
+                        <p>What is your book called?</p>
+                        <input v-model="title" placeholder="title">
+                        <p>Who's the author?</p>
+                        <input v-model="author" placeholder="author">
+                        <p>Write your description!</p>
+                        <input v-model="description" placeholder="description">
+                        <p>What's the genre?</p>
+                        <input v-model="genre" placeholder="genre">
+                        <p>Rate the book (0-5):</p>
+                        <input v-model="rating" placeholder="rating">
+                        <p>Write a review!</p>
                         <input v-model="review" placeholder="review">
-                        <button @click="upload(book, person)">Upload</button>
+                        <button @click="upload()">Submit Book</button>
                     </div><!--form-->
-                    <div class="upload" v-if="addItem">
-                        <h2>{{addItem.title}}</h2>
-                        <img :src="addItem.path" />
-                    </div><!--upload-->
+                    <!-- <div class="upload" v-if="addItem">
+                        <h2>Successfully submitted!</h2>
+                    </div>upload -->
                 </div><!--add-->
             </div><!--inputField-->
             <div class="inputField">
                 <div class="heading">
-                    <h2>Edit/Delete a Review:</h2>
+                    <h2>Edit/Delete a Book:</h2>
                 </div> <!--heading-->
                 <div class="edit">
                     <div class="form">
-                        <p>Choose a Review:</p>
-                        <multiselect label="name" v-model="findItem" :options="allReviews"></multiselect>
-                        <p>You selected:{{findItem}}</p>
+                        <p>Choose Your Book:</p>
+                        <!-- <multiselect label="name" v-model="findItem" :options="allReviews"></multiselect>
+                        <p>You selected:{{findItem}}</p> -->
                     </div>
                     <div class="editing">
                         <div class="upload" v-if="findItem">
-                            <p>Change Review:</p>
-                            <input v-model="findItem.review">
+                            <p>Change Book Details:</p>
+                            <input v-model="findItem.book">
                             <p></p>
                         </div><!--upload-->
                         <div class="actions" v-if="findItem">
-                            <button class="action" @click="editItem(findItem)">Edit</button>
-                            <button class="action" @click="deleteItem(findItem)">Delete</button>
+                            <!-- <button class="action" @click="editItem(findItem)">Edit</button>
+                            <button class="action" @click="deleteItem(findItem)">Delete</button> -->
                         </div><!--actions-->
                     </div> <!--editing-->
                 </div><!--edit-->
@@ -51,96 +55,92 @@
 </template>
 
 <script>
-import axios from 'axios';
-import Multiselect from 'vue-multiselect';
+// import Books from "../components/Books.vue";
 export default {
-    components: { Multiselect },
-    name: 'SubmitReviews',
+    // components: {
+    //     Books,
+    // },
+    name: 'Review',
     data() {
         return {
-            book: null,
-            person: null,
-            books: [],
-            users: [],
-            allReviews: [],
-            findItem: null,
-            addItem: null,
+            title: "",
+            author: "",
+            descripton: "",
+            genre: "",
+            rating: "",
             review: "",
         }
     },
     created() {
         this.getBooks();
-        this.getUsers();
-        this.getAllReviews();
     },
     methods: {
-        fileChanged(event) {
-            this.file = event.target.files[0]
+    //     fileChanged(event) {
+    //         this.file = event.target.files[0]
+    //     },
+        upload() {
+            let index = this.$root.$data.books.length - 1;
+            let newID = this.$root.$data.books[index].id + 1;
+            // console.log(index);
+            // console.log(newID);
+            let newBook = { 
+                id: newID,
+                title: this.title,
+                description: this.description,
+                genre: this.genre,
+                person: this.author,
+                rating: this.rating,
+                review: this.review,
+                cover: "http://dummyimage.com/150x230.png/cc0000/ffffff",
+            };
+            this.$root.$data.books.unshift(newBook);
+            this.title = "";
+            this.description = "";
+            this.genre = "";
+            this.person = "";
+            this.rating = "";
+            this.review = "";
         },
-        async upload(book, person) {
-            try {
-                let r1 = await axios.post("/api/books/" + book._id + "/persons/" + person._id + "/reviews", {
-                    book: this.book,
-                    person: this.person,
-                    review: this.review
-                });
-                this.addItem = r1.data;
-                this.review = "";
-                this.book = null;
-                this.person = null;
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        async getBooks() {
-            try {
-                let response = await axios.get("/api/books");
-                this.books = response.data;
-                return true;
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        async getUsers() {
-            try {
-                let response = await axios.get("/api/persons");
-                this.users = response.data;
-                return true;
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        async getAllReviews() {
-            try {
-                let response = await axios.get("/api/reviews");
-                this.allReviews = response.data;
-                return true;
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        async deleteItem(item) {
-            try {
-                await axios.delete("/api/reviews/" + item._id);
-                this.findItem = null;
-                this.getItems();
-                return true;
-            } catch (error) {
-                console.log(error);
-            }
-        },  
-        async editItem(item) {
-            try {
-                await axios.put("/api/reviews/" + item._id, {
-                    review: this.findItem.review,
-                });
-                this.findItem = null;
-                this.getItems();
-                return true;
-            } catch (error) {
-                console.log(error);
-            }
-        },
+    //     async getBooks() {
+    //         try {
+    //             let response = await axios.get("/api/books");
+    //             this.books = response.data;
+    //             return true;
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     },
+    //     async getAllReviews() {
+    //         try {
+    //             let response = await axios.get("/api/reviews");
+    //             this.allReviews = response.data;
+    //             return true;
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     },
+    //     async deleteItem(item) {
+    //         try {
+    //             await axios.delete("/api/reviews/" + item._id);
+    //             this.findItem = null;
+    //             this.getItems();
+    //             return true;
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     },  
+    //     async editItem(item) {
+    //         try {
+    //             await axios.put("/api/reviews/" + item._id, {
+    //                 review: this.findItem.review,
+    //             });
+    //             this.findItem = null;
+    //             this.getItems();
+    //             return true;
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     },
     }
 }
 </script>
