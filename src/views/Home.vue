@@ -9,7 +9,10 @@
         page to add one of your own! </h4> 
     </div>
     </div>
-    <Books :books="books" />   
+    <div class = "image-gallery"> 
+        <Books :books="books" /> 
+    </div>
+      
   </div> <!--home-->
 </template>
 

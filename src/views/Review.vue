@@ -20,11 +20,13 @@
                         <input v-model="rating" placeholder="rating">
                         <p>Write a review!</p>
                         <input v-model="review" placeholder="review">
+                        <p>Give us a URL for the book cover:</p>
+                        <input v-model="photoURL" placeholder="photoURL">
                         <button @click="upload()">Submit Book</button>
                     </div><!--form-->
-                    <!-- <div class="upload" v-if="addItem">
+                    <div class="upload" v-if="addItem">
                         <h2>Successfully submitted!</h2>
-                    </div>upload -->
+                    </div>
                 </div><!--add-->
             </div><!--inputField-->
             <div class="inputField">
@@ -39,12 +41,16 @@
                     </div>
                     <div class="editing">
                         <div class="upload" v-if="findItem">
-                            <!-- <p>Change Book Details:</p>
-                            <input v-model="findItem">
-                            <p></p> -->
+                            <p>Change Book Details:</p>
+                            <input v-model="findItem.genre">
+                            <input v-model="findItem.review">
+                            <p></p>
                         </div><!--upload-->
                         <div class="actions" v-if="findItem">
-                            <!-- <button class="action" @click="editItem(findItem)">Edit</button> -->
+                            <button class="action" @click="editItem(findItem)">Edit</button>
+                            <div class="upload" v-if="addItem">
+                                <h2>Successfully submitted!</h2>
+                            </div>
                             <button class="action" @click="deleteItem(findItem)">Delete</button>
                         </div><!--actions-->
                     </div> <!--editing-->
@@ -71,25 +77,19 @@ export default {
             genre: "",
             rating: "",
             review: "",
+            photoURL: "",
             allBooks: [],
             findItem: null,
+            addItem: null,
         }
     },
-    // computed: {
-    //     allBooks = this.getBooks();
-    // }
     created() {
         this.getBooks();
     },
     methods: {
-    //     fileChanged(event) {
-    //         this.file = event.target.files[0]
-    //     },
         upload() {
             let index = this.$root.$data.books.length - 1;
             let newID = this.$root.$data.books[index].id + 1;
-            // console.log(index);
-            // console.log(newID);
             let newBook = { 
                 id: newID,
                 title: this.title,
@@ -98,47 +98,34 @@ export default {
                 person: this.author,
                 rating: this.rating,
                 review: this.review,
-                cover: "http://dummyimage.com/150x230.png/cc0000/ffffff",
+                cover: this.photoURL,
             };
             this.$root.$data.books.unshift(newBook);
             this.title = "";
             this.description = "";
             this.genre = "";
-            this.person = "";
+            this.author = "";
             this.rating = "";
             this.review = "";
+            this.photoURL= "";
         },
         getBooks() {
             this.allBooks = this.$root.$data.books;
         },
-    //     async getAllReviews() {
-    //         try {
-    //             let response = await axios.get("/api/reviews");
-    //             this.allReviews = response.data;
-    //             return true;
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     },
         async deleteItem(item) {
             if(this.$root.$data.books.length === 0) {
                 return;
             }
             let index = this.$root.$data.books.indexOf(item);
             this.$root.$data.books.splice(index,1);
+            this.findItem = null;
         },  
-    //     async editItem(item) {
-    //         try {
-    //             await axios.put("/api/reviews/" + item._id, {
-    //                 review: this.findItem.review,
-    //             });
-    //             this.findItem = null;
-    //             this.getItems();
-    //             return true;
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     },
+        editItem(item) {
+            let index = this.$root.$data.books.indexOf(item);
+            this.$root.$data.books[index].genre = item.genre;
+            this.$root.$data.books[index].review = item.review;
+            this.findItem = null;
+        },
     }
 }
 </script>

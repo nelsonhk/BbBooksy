@@ -1,19 +1,29 @@
 <template>
 <div class="wrapper">
   <div class="books">
-    <div class="book" v-for="book in books" :key="book.id">
-      <div class="info">
-        <h1>{{book.title}}</h1>
-        <p>By: {{book.person}}</p>
+    <div class="image" v-for="book in books" :key="book.id">
+      <div class="info1">
+        <div class="info-item1">
+          <h2>{{book.title}}</h2>
+        </div>
+        <div class="info-item1">
+          <p>By: {{book.person}}</p>
+        </div>
+        <!-- <p>Description: {{book.description}}</p> -->
       </div>
-      <div class="genre">
-        <p>{{book.genre}}</p>
-      </div>
-      <div class="image">
+      <div class="cover">
         <img :src="book.cover"/>
       </div>
-      <div class="reviews">
-        <h2>{{book.rating}}</h2>
+      <div class="info-item"> 
+          <p>Genre: {{book.genre}}</p>
+        </div>
+      <div class="info2">
+        <div class="info-item"> 
+          <p>Average Rating: {{book.rating}}</p>
+        </div>
+        <div class="info-item"> 
+          <p>What critics are saying: {{book.review}}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -36,65 +46,34 @@ export default {
   justify-content: center;
 }
 
-.products {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+.image {
+  margin: 0 0 1.5em;
+  display: inline-block;
+  width: 100%;
+  padding: 10%;
+  background-color: antiquewhite;
+  border: 4px solid #a13b0c;
+}
+.cover {
+  width: 70%;
+  margin: auto;
 }
 
-.product {
-  margin: 10px;
-  margin-top: 50px;
-  width: 200px;
+.info1 {
+  padding-bottom: 6%;
 }
 
-.product img {
-  border: 2px solid #333;
-  height: 250px;
-  width: 200px;
-  object-fit: cover;
+.info2 {
+  padding-top: 6%;
 }
 
-.product .image {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 5px;
+.info-item {
+  padding-top: 1%;
+  padding-bottom: 1%;
 }
 
-.info {
-  background: #F2921D;
-  color: #000;
-  padding: 10px 30px;
-  height: 80px;
+.info-item1 {
+  text-align: center;
 }
 
-.info h1 {
-  font-size: 16px;
-}
-
-.info h2 {
-  font-size: 14px;
-}
-
-.info p {
-  margin: 0px;
-  font-size: 10px;
-}
-
-
-.price {
-  display: flex;
-}
-
-button {
-  height: 50px;
-  background: #000;
-  color: white;
-  border: none;
-}
-
-.auto {
-  margin-left: auto;
-}
 </style>
