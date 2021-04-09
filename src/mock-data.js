@@ -68,7 +68,7 @@ let mock = [{
   "genre": "Comedy",
   "person": "Stevy Griss",
   "rating": 1,
-  "review": "", 
+  "review": "Ew, David!", 
   "cover": "https://live.staticflickr.com/6179/6171918399_a1434c792d_b.jpg"
 }, {
   "id": 9,
@@ -104,7 +104,7 @@ let mock = [{
   "genre": "Horror",
   "person": "Leonelle Wand",
   "rating": 1,
-  "review": "", 
+  "review": "Ugh Alexis", 
   "cover": "https://live.staticflickr.com/2082/1678891007_b6e8f2030a_b.jpg"
 }, {
   "id": 13,

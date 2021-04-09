@@ -14,13 +14,29 @@
                     <div class="editing">
                         <div class="upload" v-if="findItem">
                           <div class="question">
+                            <p>Change Book Title:</p>
+                            <input v-model="findItem.title">
+                          </div>
+                          <div class="question">
+                            <p>Change Author:</p>
+                            <input v-model="findItem.person">
+                          </div>
+                          <div class="question">
                             <p>Change Book Genre:</p>
                             <input v-model="findItem.genre">
                           </div>
                           <div class="question">
+                            <p>Change Book Rating:</p>
+                            <input v-model="findItem.rating">
+                          </div>
+                          <div class="question">
                             <p>Change Book Review:</p>
                             <input v-model="findItem.review">
-                            </div>
+                          </div>
+                          <div class="question">
+                            <p>Change Book cover:</p>
+                            <input v-model="findItem.cover">
+                          </div>
                             <p></p>
                         </div><!--upload-->
                         <div class="actions" v-if="findItem">
@@ -77,8 +93,12 @@ export default {
         },  
         editItem(item) {
             let index = this.$root.$data.books.indexOf(item);
+            this.$root.$data.books[index].title = item.title;
+            this.$root.$data.books[index].person = item.author;
             this.$root.$data.books[index].genre = item.genre;
+            this.$root.$data.books[index].rating = item.rating;
             this.$root.$data.books[index].review = item.review;
+            this.$root.$data.books[index].cover = item.photoURL;
             this.findItem = null;
         },
     }
