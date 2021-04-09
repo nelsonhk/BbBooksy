@@ -34,18 +34,18 @@
                 <div class="edit">
                     <div class="form">
                         <p>Choose Your Book:</p>
-                        <!-- <multiselect label="name" v-model="findItem" :options="allReviews"></multiselect>
+                        <multiselect label="name" v-model="findItem" :options="allBooks"></multiselect>
                         <p>You selected:{{findItem}}</p> -->
                     </div>
                     <div class="editing">
                         <div class="upload" v-if="findItem">
-                            <p>Change Book Details:</p>
-                            <input v-model="findItem.book">
-                            <p></p>
+                            <!-- <p>Change Book Details:</p>
+                            <input v-model="findItem">
+                            <p></p> -->
                         </div><!--upload-->
                         <div class="actions" v-if="findItem">
-                            <!-- <button class="action" @click="editItem(findItem)">Edit</button>
-                            <button class="action" @click="deleteItem(findItem)">Delete</button> -->
+                            <!-- <button class="action" @click="editItem(findItem)">Edit</button> -->
+                            <button class="action" @click="deleteItem(findItem)">Delete</button>
                         </div><!--actions-->
                     </div> <!--editing-->
                 </div><!--edit-->
@@ -56,10 +56,12 @@
 
 <script>
 // import Books from "../components/Books.vue";
+import Multiselect from 'vue-multiselect';
 export default {
-    // components: {
-    //     Books,
-    // },
+    components: {
+        // Books,
+        Multiselect,
+    },
     name: 'Review',
     data() {
         return {
@@ -69,8 +71,13 @@ export default {
             genre: "",
             rating: "",
             review: "",
+            allBooks: [],
+            findItem: null,
         }
     },
+    // computed: {
+    //     allBooks = this.getBooks();
+    // }
     created() {
         this.getBooks();
     },
@@ -101,15 +108,9 @@ export default {
             this.rating = "";
             this.review = "";
         },
-    //     async getBooks() {
-    //         try {
-    //             let response = await axios.get("/api/books");
-    //             this.books = response.data;
-    //             return true;
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     },
+        getBooks() {
+            this.allBooks = this.$root.$data.books;
+        },
     //     async getAllReviews() {
     //         try {
     //             let response = await axios.get("/api/reviews");
@@ -119,16 +120,13 @@ export default {
     //             console.log(error);
     //         }
     //     },
-    //     async deleteItem(item) {
-    //         try {
-    //             await axios.delete("/api/reviews/" + item._id);
-    //             this.findItem = null;
-    //             this.getItems();
-    //             return true;
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     },  
+        async deleteItem(item) {
+            if(this.$root.$data.books.length === 0) {
+                return;
+            }
+            let index = this.$root.$data.books.indexOf(item);
+            this.$root.$data.books.splice(index,1);
+        },  
     //     async editItem(item) {
     //         try {
     //             await axios.put("/api/reviews/" + item._id, {
